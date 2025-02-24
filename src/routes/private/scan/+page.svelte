@@ -5,6 +5,7 @@
   
       let isLoading = $state(false);
       let errorMessage = $state("");
+      $inspect(errorMessage);
       let recognizedClothes = $state<OpenAiFit[]>([]);
         let clothesSuccessfullyAdded = $state(false);
 
@@ -38,9 +39,9 @@
                   recognizedClothes = result.clothesArray;
   
   
-              }
+              } 
               catch(error){
-                  errorMessage = "An error occurred while processing the image. Please try again.";
+                  errorMessage = "322131312412412";
               }
           }
           else{
@@ -67,7 +68,7 @@
               on:drop={handleDrop}
               multiple={false}
               accept="image/*"
-              maxSize={10 * 1024 * 1024}
+              maxSize={100 * 1024 * 1024}
               containerClasses={"dropzone-cover"}
           >
           <Icon icon="bi:camera-fill" width={"40"}/>
