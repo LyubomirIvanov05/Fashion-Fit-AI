@@ -41,7 +41,7 @@
   
               } 
               catch(error){
-                  errorMessage = "322131312412412";
+                  errorMessage = (error as Error)?.message || "An error occurred while trying to upload the file";
               }
           }
           else{
