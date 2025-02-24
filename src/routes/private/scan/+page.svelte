@@ -14,81 +14,41 @@
           clothingType: string;
       }
   
-    //   async function handleDrop(e: CustomEvent<any>) {
-    //       const {acceptedFiles} = e.detail;
+      async function handleDrop(e: CustomEvent<any>) {
+          const {acceptedFiles} = e.detail;
          
-    //       if(acceptedFiles.length){
-    //           isLoading = true;
-    //           const fileToSendToOpenAi = acceptedFiles[0];
-    //           const base64String = await convertFileToBase64(fileToSendToOpenAi);
+          if(acceptedFiles.length){
+              isLoading = true;
+              const fileToSendToOpenAi = acceptedFiles[0];
+              const base64String = await convertFileToBase64(fileToSendToOpenAi);
   
   
-    //           try{
-    //               const response = await fetch("/api/scan", {
-    //                   method: "POST",
-    //                   headers: {
-    //                       "Content-Type": "application/json"
-    //                   },
-    //                   body: JSON.stringify({base64: base64String})
-    //               }); 
+              try{
+                  const response = await fetch("/api/scan", {
+                      method: "POST",
+                      headers: {
+                          "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify({base64: base64String})
+                  }); 
   
-    //               isLoading = false;
-    //               const result = await response.json() as { clothesArray: OpenAiFit[] };
-    //               console.log(result);
+                  isLoading = false;
+                  const result = await response.json() as { clothesArray: OpenAiFit[] };
+                  console.log(result);
   
-    //               recognizedClothes = result.clothesArray;
+                  recognizedClothes = result.clothesArray;
   
   
-    //           } 
-    //           catch(error){
-    //             console.log((error as Error)?.message);
-    //               errorMessage = (error as Error)?.message || "An error occurred while trying to upload the file";
-    //           }
-    //       }
-    //       else{
-    //           errorMessage = "Could not upload given file. Are you sure it's an image with a file size less than 10MB?";
-    //       }
-    //   }
-    async function handleDrop(e: CustomEvent<any>) {
-  const { acceptedFiles } = e.detail;
-
-  if (acceptedFiles.length) {
-    isLoading = true;
-    const fileToSendToOpenAi = acceptedFiles[0];
-    const base64String = await convertFileToBase64(fileToSendToOpenAi);
-
-    try {
-      const response = await fetch("/api/scan", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ base64: base64String })
-      });
-
-      // Check if response is OK, if not, read it as text and throw an error.
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText);
+              } 
+              catch(error){
+                console.log((error as Error)?.message);
+                  errorMessage = (error as Error)?.message || "An error occurred while trying to upload the file";
+              }
+          }
+          else{
+              errorMessage = "Could not upload given file. Are you sure it's an image with a file size less than 10MB?";
+          }
       }
-
-      const result = (await response.json()) as { clothesArray: OpenAiFit[] };
-      console.log(result);
-      recognizedClothes = result.clothesArray;
-    } catch (error) {
-      console.log((error as Error)?.message);
-      errorMessage =
-        (error as Error)?.message ||
-        "An error occurred while trying to upload the file";
-    } finally {
-      isLoading = false;
-    }
-  } else {
-    errorMessage =
-      "Could not upload given file. Are you sure it's an image with a file size less than 10MB?";
-  }
-}
-
   </script>
   
   <h2 class="mt-[32px] mb-[64px] font-bold text-[60px] text-center">Take a picture to add clothes</h2>
@@ -109,7 +69,7 @@
               on:drop={handleDrop}
               multiple={false}
               accept="image/*"
-              maxSize={100 * 1024 * 1024}
+              maxSize={5 * 1024 * 1024}
               containerClasses={"dropzone-cover"}
           >
           <Icon icon="bi:camera-fill" width={"40"}/>
