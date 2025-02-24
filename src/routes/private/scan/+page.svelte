@@ -41,6 +41,7 @@
   
               } 
               catch(error){
+                console.log((error as Error)?.message);
                   errorMessage = (error as Error)?.message || "An error occurred while trying to upload the file";
               }
           }
