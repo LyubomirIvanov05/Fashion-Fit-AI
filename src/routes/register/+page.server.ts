@@ -55,7 +55,7 @@ export const actions = {
         })
 
         if(error || !data.user) {
-            console.log(error);
+            console.log(error?.message);
             returnObject.success = false;
             return fail(400, returnObject as any);
         }
